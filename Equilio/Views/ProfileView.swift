@@ -15,7 +15,7 @@ struct ProfileView: View {
                 VStack(spacing: 20) {
                     // User Info Section
                     VStack(spacing: 8) {
-                        Text(viewModel.profile?.username ?? "")
+                        Text(viewModel.profile?.user.username ?? "")
                             .font(.title)
                             .bold()
                         Text(viewModel.profile?.email ?? "")
@@ -116,34 +116,6 @@ struct StatCard: View {
     }
 }
 
-struct ReceiptRow: View {
-    let receipt: Receipt
-    let viewModel: ProfileViewModel
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(receipt.description)
-                    .font(.headline)
-                Text(viewModel.formatDate(receipt.created_at))
-                    .font(.caption)
-                    .foregroundColor(.gray)
-            }
-            
-            Spacer()
-            
-            Text(viewModel.formatCurrency(receipt.amount))
-                .font(.headline)
-                .foregroundColor(receipt.status == "settled" ? .green : .primary)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
-        .shadow(radius: 2)
-        .padding(.horizontal)
-    }
-}
-
 struct EditProfileView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: ProfileViewModel
@@ -179,7 +151,7 @@ struct EditProfileView: View {
                 }
             }
             .onAppear {
-                username = viewModel.profile?.username ?? ""
+                username = viewModel.profile?.user.username ?? ""
                 email = viewModel.profile?.email ?? ""
             }
         }

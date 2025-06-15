@@ -56,4 +56,4 @@ async def update_user_me(
     
     await db.commit()
     await db.refresh(current_user)
-    return current_user 
+    return current_user

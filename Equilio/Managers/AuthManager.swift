@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 class AuthManager: ObservableObject {
+    static let shared = AuthManager()
     @AppStorage("jwt") private var jwt: String = ""
     @Published var isAuthenticated = false
     @Published var currentUser: User?
