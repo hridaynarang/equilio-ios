@@ -15,11 +15,9 @@ class HomeViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            async let receiptsTask = networkManager.get<[Receipt]>("/receipts/recent")
-            async let groupsTask = networkManager.get<[Group]>("/groups/active")
-            
+            async let receiptsTask: [Receipt] = networkManager.get("/receipts/recent")
+            async let groupsTask: [Group] = networkManager.get("/groups/active")
             let (receipts, groups) = try await (receiptsTask, groupsTask)
-            
             self.recentReceipts = receipts
             self.activeGroups = groups
         } catch {
