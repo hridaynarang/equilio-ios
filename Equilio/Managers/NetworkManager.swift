@@ -26,6 +26,8 @@ enum NetworkError: LocalizedError {
     }
 }
 
+struct EmptyResponse: Decodable {}
+
 class NetworkManager {
     static let shared = NetworkManager()
     private let baseURL = "http://localhost:8000"
@@ -50,7 +52,7 @@ class NetworkManager {
     }
     
     func delete(_ endpoint: String) async throws {
-        try await performRequest(endpoint: endpoint, method: "DELETE")
+        let _: EmptyResponse = try await performRequest(endpoint: endpoint, method: "DELETE")
     }
     
     // MARK: - Private Methods

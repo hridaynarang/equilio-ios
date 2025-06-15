@@ -26,7 +26,14 @@ class ManualReceiptEntryViewModel: ObservableObject {
     
     // Methods
     func addItem(name: String, price: Double) {
-        items.append(ReceiptItem(name: name, price: price))
+        items.append(ReceiptItem(
+            id: Int.random(in: 1...Int.max),
+            name: name,
+            price: price,
+            receipt_id: nil,
+            created_at: nil,
+            updated_at: nil
+        ))
     }
     
     func removeItem(at index: Int) {
