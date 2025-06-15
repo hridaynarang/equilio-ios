@@ -23,85 +23,72 @@ class ReceiptViewModel: ObservableObject {
     func fetchReceipts() async {
         isLoading = true
         errorMessage = nil
-        
         do {
-            self.receipts = try await networkManager.get<[Receipt]>("/receipts")
+            let receipts: [Receipt] = try await networkManager.get("/receipts")
+            self.receipts = receipts
         } catch {
             errorMessage = error.localizedDescription
         }
-        
         isLoading = false
     }
     
     func fetchReceiptDetail(id: Int) async {
         isLoading = true
         errorMessage = nil
-        
         do {
-            self.selectedReceipt = try await networkManager.get<Receipt>("/receipts/\(id)")
+            let receipt: Receipt = try await networkManager.get("/receipts/\(id)")
+            self.selectedReceipt = receipt
         } catch {
             errorMessage = error.localizedDescription
         }
-        
         isLoading = false
     }
     
-    func createReceipt(title: String, merchant: String, date: Date, totalPeople: Int) async {
+    func createReceipt(title: String, date: Date, totalPeople: Int, items: [ReceiptItemCreate], notes: String?) async {
         guard let imageData = imageData else {
             errorMessage = "Please select an image"
             return
         }
-        
         isLoading = true
         errorMessage = nil
-        
         do {
-            // First, upload the image to S3
             let imageUrl = try await s3Service.uploadImage(imageData)
-            
-            // Then, create the receipt with the image URL
-            let receipt = try await networkManager.post<Receipt, ReceiptCreateRequest>(
-                "/receipts",
-                body: ReceiptCreateRequest(
-                    title: title,
-                    merchant: merchant,
-                    date: date,
-                    total_people: totalPeople,
-                    image_url: imageUrl
-                )
+            let isoDate = ISO8601DateFormatter().string(from: date)
+            let request = ReceiptCreateRequest(
+                title: title,
+                date: isoDate,
+                total_people: totalPeople,
+                items: items,
+                image_url: imageUrl,
+                notes: notes
             )
-            
+            let receipt: Receipt = try await networkManager.post("/receipts", body: request)
             receipts.insert(receipt, at: 0)
             resetForm()
         } catch {
             errorMessage = error.localizedDescription
         }
-        
         isLoading = false
     }
     
     func updateReceipt(id: Int) async {
         guard validateInput() else { return }
-        
         isLoading = true
         errorMessage = nil
-        
         do {
             var formData: [String: Any] = [
                 "description": description,
                 "amount": Double(amount) ?? 0.0
             ]
-            
             if let group = selectedGroup {
                 formData["group_id"] = group.id
             }
-            
-            let receipt = try await networkManager.uploadMultipartFormData<Receipt>(
+            let receipt: Receipt = try await networkManager.uploadMultipartFormData(
                 endpoint: "/receipts/\(id)",
                 formData: formData,
-                imageData: imageData
+                imageData: imageData,
+                imageKey: "image"
             )
-            
             if let index = receipts.firstIndex(where: { $0.id == id }) {
                 receipts[index] = receipt
             }
@@ -109,7 +96,6 @@ class ReceiptViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
-        
         isLoading = false
     }
     
