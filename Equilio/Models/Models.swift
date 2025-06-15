@@ -132,4 +132,32 @@ struct Trip: Identifiable, Codable {
     let name: String
     let members: [User]
     let created_at: String
+}
+
+// MARK: - ReceiptCreateRequest
+struct ReceiptCreateRequest: Codable {
+    let title: String
+    let date: String // ISO8601 format
+    let total_people: Int
+    let items: [ReceiptItemCreate]
+    let image_url: String?
+    let notes: String?
+    
+    struct ReceiptItemCreate: Codable {
+        let name: String
+        let price: Double
+    }
+}
+
+// MARK: - ReceiptSummary
+struct ReceiptSummary: Codable {
+    let you_owe: Double
+    let owed_to_you: Double
+    let this_month: Double
+}
+
+// MARK: - ReceiptResponse
+struct ReceiptResponse: Codable {
+    let receipts: [Receipt]
+    let summary: ReceiptSummary
 } 

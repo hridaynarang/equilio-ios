@@ -8,6 +8,7 @@ enum S3Error: Error {
 }
 
 class S3Service {
+    static let shared = S3Service()
     private let networkManager = NetworkManager.shared
     
     func uploadImage(_ imageData: Data) async throws -> String {

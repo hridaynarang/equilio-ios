@@ -77,29 +77,7 @@ class AuthManager: ObservableObject {
         guard isTokenValid() else {
             // Token is expired or invalid, log out user
             logout()
-            throw AuthError.invalidToken
-        }
-    }
-}
-
-// MARK: - Auth Error
-
-enum AuthError: LocalizedError {
-    case invalidToken
-    case unauthorized
-    case networkError
-    case unknown
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidToken:
-            return "Your session has expired. Please log in again."
-        case .unauthorized:
-            return "You are not authorized to perform this action."
-        case .networkError:
-            return "A network error occurred. Please check your connection."
-        case .unknown:
-            return "An unknown error occurred. Please try again."
+            throw AuthError.unauthorized
         }
     }
 } 

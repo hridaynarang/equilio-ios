@@ -60,9 +60,9 @@ class ReceiptViewModel: ObservableObject {
             let imageUrl = try await s3Service.uploadImage(imageData)
             
             // Then, create the receipt with the image URL
-            let receipt = try await networkManager.post<Receipt, Models.ReceiptCreateRequest>(
+            let receipt = try await networkManager.post<Receipt, ReceiptCreateRequest>(
                 "/receipts",
-                body: Models.ReceiptCreateRequest(
+                body: ReceiptCreateRequest(
                     title: title,
                     merchant: merchant,
                     date: date,
