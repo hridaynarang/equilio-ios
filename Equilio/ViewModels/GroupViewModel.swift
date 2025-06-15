@@ -17,7 +17,8 @@ class GroupViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            self.groups = try await networkManager.get<[Group]>("/groups")
+            let groups: [Group] = try await networkManager.get("/groups")
+            self.groups = groups
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -30,7 +31,8 @@ class GroupViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            self.selectedGroup = try await networkManager.get<GroupDetail>("/groups/\(id)")
+            let groupDetail: GroupDetail = try await networkManager.get("/groups/\(id)")
+            self.selectedGroup = groupDetail
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -45,10 +47,7 @@ class GroupViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            let group = try await networkManager.post<Group, [String: String]>(
-                "/groups",
-                body: ["name": newGroupName]
-            )
+            let group: Group = try await networkManager.post("/groups", body: ["name": newGroupName])
             groups.append(group)
             showingCreateGroup = false
             newGroupName = ""
@@ -64,10 +63,7 @@ class GroupViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            _ = try await networkManager.post<Group, [String: String]>(
-                "/groups/\(groupId)/members",
-                body: ["username": username]
-            )
+            _ = try await networkManager.post("/groups/\(groupId)/members", body: ["username": username]) as Group
             await fetchGroupDetail(id: groupId)
         } catch {
             errorMessage = error.localizedDescription
