@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-@MainActor
 class HomeViewModel: ObservableObject {
     @Published var recentReceipts: [Receipt] = []
     @Published var activeGroups: [Group] = []

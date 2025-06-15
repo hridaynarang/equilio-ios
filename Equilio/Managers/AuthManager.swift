@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-@MainActor
 class AuthManager: ObservableObject {
     @AppStorage("jwt") private var jwt: String = ""
     @Published var isAuthenticated = false
@@ -14,9 +13,9 @@ class AuthManager: ObservableObject {
         self.isAuthenticated = !jwt.isEmpty
     }
     
-    func login(email: String, password: String) async throws {
+    func login(username: String, password: String) async throws {
         do {
-            let response = try await authService.login(email: email, password: password)
+            let response = try await authService.login(username: username, password: password)
             jwt = response.access_token
             currentUser = response.user
             isAuthenticated = true

@@ -26,7 +26,6 @@ enum NetworkError: LocalizedError {
     }
 }
 
-@MainActor
 class NetworkManager {
     static let shared = NetworkManager()
     private let baseURL = "http://localhost:8000"

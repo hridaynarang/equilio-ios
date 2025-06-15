@@ -16,7 +16,7 @@ class AuthService {
         self.authManager = authManager
     }
     
-    func login(email: String, password: String) async throws -> AuthResponse {
+    func login(username: String, password: String) async throws -> AuthResponse {
         guard let url = URL(string: "\(baseURL)/auth/login") else {
             throw AuthError.invalidURL
         }
@@ -25,7 +25,7 @@ class AuthService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let loginRequest = LoginRequest(email: email, password: password)
+        let loginRequest = LoginRequest(username: username, password: password)
         request.httpBody = try JSONEncoder().encode(loginRequest)
         
         do {
