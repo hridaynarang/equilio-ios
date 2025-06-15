@@ -1,4 +1,5 @@
 import SwiftUI
+import Models
 
 struct FriendsView: View {
     @StateObject private var viewModel: FriendsViewModel

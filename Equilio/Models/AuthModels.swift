@@ -14,11 +14,4 @@ struct SignupRequest: Codable {
 struct AuthResponse: Codable {
     let access_token: String
     let token_type: String
-}
-
-struct User: Codable {
-    let id: Int
-    let username: String
-    let email: String
-    let created_at: Date
 } 

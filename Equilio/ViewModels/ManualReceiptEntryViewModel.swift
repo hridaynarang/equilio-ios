@@ -1,11 +1,7 @@
 import Foundation
 import SwiftUI
-
-struct ReceiptItem: Identifiable {
-    let id = UUID()
-    var name: String
-    var price: Double
-}
+import Combine
+import Models
 
 @MainActor
 class ManualReceiptEntryViewModel: ObservableObject {
@@ -13,7 +9,7 @@ class ManualReceiptEntryViewModel: ObservableObject {
     @Published var date = Date()
     @Published var totalPeople = 1
     @Published var notes = ""
-    @Published var items: [ReceiptItem] = []
+    @Published var items: [Models.ReceiptItem] = []
     @Published var selectedTrip: Trip?
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -31,7 +27,7 @@ class ManualReceiptEntryViewModel: ObservableObject {
     
     // Methods
     func addItem(name: String, price: Double) {
-        items.append(ReceiptItem(name: name, price: price))
+        items.append(Models.ReceiptItem(name: name, price: price))
     }
     
     func removeItem(at index: Int) {

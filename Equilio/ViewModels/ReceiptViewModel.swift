@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import PhotosUI
+import Models
 
 @MainActor
 class ReceiptViewModel: ObservableObject {
@@ -60,9 +61,9 @@ class ReceiptViewModel: ObservableObject {
             let imageUrl = try await s3Service.uploadImage(imageData)
             
             // Then, create the receipt with the image URL
-            let receipt = try await networkManager.post<Receipt, ReceiptCreateRequest>(
+            let receipt = try await networkManager.post<Receipt, Models.ReceiptCreateRequest>(
                 "/receipts",
-                body: ReceiptCreateRequest(
+                body: Models.ReceiptCreateRequest(
                     title: title,
                     merchant: merchant,
                     date: date,
@@ -163,31 +164,5 @@ class ReceiptViewModel: ObservableObject {
         selectedImage = nil
         displayedImage = nil
         imageData = nil
-    }
-}
-
-// Request model for creating a receipt
-struct ReceiptCreateRequest: Codable {
-    let title: String
-    let merchant: String
-    let date: Date
-    let total_people: Int
-    let image_url: String
-    
-    enum CodingKeys: String, CodingKey {
-        case title
-        case merchant
-        case date
-        case total_people
-        case image_url
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(title, forKey: .title)
-        try container.encode(merchant, forKey: .merchant)
-        try container.encode(date.ISO8601Format(), forKey: .date)
-        try container.encode(total_people, forKey: .total_people)
-        try container.encode(image_url, forKey: .image_url)
     }
 } 

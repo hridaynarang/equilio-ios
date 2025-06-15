@@ -40,30 +40,45 @@ struct Group: Identifiable, Codable {
 // MARK: - Receipt
 struct Receipt: Identifiable, Codable {
     let id: Int
-    let description: String
-    let amount: Double
-    let created_by: Int
-    let group_id: Int?
-    let created_at: String
-    let status: String
+    let title: String
+    let date: String // ISO8601 format
+    let total_people: Int
+    let total_amount: Double
+    let items: [ReceiptItem]
     let image_url: String?
+    let notes: String?
+    let created_at: String
+    let updated_at: String?
+    let created_by: Int?
+    let group_id: Int?
+    let status: String?
     
     var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        if let date = formatter.date(from: created_at) {
+        if let date = formatter.date(from: date) {
             formatter.dateFormat = "MMM d, yyyy"
             return formatter.string(from: date)
         }
-        return created_at
+        return date
     }
     
     var formattedAmount: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencySymbol = "$"
-        return formatter.string(from: NSNumber(value: amount)) ?? "$0.00"
+        return formatter.string(from: NSNumber(value: total_amount)) ?? "$0.00"
     }
+}
+
+// MARK: - ReceiptItem
+struct ReceiptItem: Codable, Identifiable {
+    let id: Int
+    let name: String
+    let price: Double
+    let receipt_id: Int?
+    let created_at: String?
+    let updated_at: String?
 }
 
 // MARK: - User Stats
@@ -109,4 +124,12 @@ struct GroupDetail: Codable {
     let group: Group
     let stats: GroupStats
     let recent_receipts: [Receipt]
+}
+
+// MARK: - Trip
+struct Trip: Identifiable, Codable {
+    let id: Int
+    let name: String
+    let members: [User]
+    let created_at: String
 } 

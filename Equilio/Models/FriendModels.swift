@@ -1,19 +1,6 @@
 import Foundation
 
-struct User: Codable, Identifiable {
-    let id: Int
-    let username: String
-    let email: String
-    let created_at: String
-}
-
-struct Group: Codable, Identifiable {
-    let id: Int
-    let name: String
-    let created_by: Int
-    let created_at: String
-    let members: [User]
-}
+// Use User and Group from Models.swift
 
 struct FriendRequest: Codable, Identifiable {
     let id: Int
