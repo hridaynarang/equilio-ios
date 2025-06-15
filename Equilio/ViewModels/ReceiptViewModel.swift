@@ -44,7 +44,7 @@ class ReceiptViewModel: ObservableObject {
         isLoading = false
     }
     
-    func createReceipt(title: String, date: Date, totalPeople: Int, items: [ReceiptItemCreate], notes: String?) async {
+    func createReceipt(title: String, date: Date, totalPeople: Int, items: [ReceiptCreateRequest.ReceiptItemCreate], notes: String?) async {
         guard let imageData = imageData else {
             errorMessage = "Please select an image"
             return
