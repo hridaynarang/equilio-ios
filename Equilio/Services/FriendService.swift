@@ -1,5 +1,4 @@
 import Foundation
-import Models
 
 enum FriendError: Error {
     case invalidURL

@@ -1,5 +1,4 @@
 import SwiftUI
-import Models
 
 struct ProfileView: View {
     let token: String

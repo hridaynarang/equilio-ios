@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 import PhotosUI
-import Models
 
 @MainActor
 class AddReceiptViewModel: ObservableObject {

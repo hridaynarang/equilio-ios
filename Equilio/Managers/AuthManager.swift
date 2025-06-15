@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import Models
 
 @MainActor
 class AuthManager: ObservableObject {

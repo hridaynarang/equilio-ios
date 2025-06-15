@@ -1,5 +1,4 @@
 import Foundation
-import Models
 
 enum ProfileError: Error {
     case invalidURL
