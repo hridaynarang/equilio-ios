@@ -6,7 +6,7 @@ from jose import JWTError, jwt
 from database import get_db
 from models.user import User
 from schemas.user import User as UserSchema, UserUpdate
-from auth.jwt import SECRET_KEY, ALGORITHM
+from auth.jwt import SECRET_KEY, ALGORITHM, get_password_hash
 from routers.auth import oauth2_scheme
 
 router = APIRouter()
