@@ -23,7 +23,7 @@ struct MainTabView: View {
                 }
                 .tag(2)
             
-            ProfileView()
+            ProfileView(token: AuthManager.shared.token ?? "")
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }

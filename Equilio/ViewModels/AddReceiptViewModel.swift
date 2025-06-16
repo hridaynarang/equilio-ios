@@ -14,11 +14,10 @@ class AddReceiptViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showingSuccess = false
     
-    private let receiptService: ReceiptService
+    private let receiptService = ReceiptService.shared
     let groups: [Group]
     
     init(token: String, groups: [Group]) {
-        self.receiptService = ReceiptService(token: token)
         self.groups = groups
     }
     
@@ -37,12 +36,15 @@ class AddReceiptViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            _ = try await receiptService.createReceipt(
-                description: description,
-                amount: amountDouble,
-                groupId: group.id,
-                imageData: imageData
+            let request = ReceiptCreateRequest(
+                title: description,
+                date: ISO8601DateFormatter().string(from: Date()),
+                total_people: 1,
+                items: [],
+                image_url: nil,
+                notes: nil
             )
+            _ = try await receiptService.createReceipt(request: request)
             showingSuccess = true
             resetForm()
         } catch {

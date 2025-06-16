@@ -13,7 +13,7 @@ class S3Service {
     
     func uploadImage(_ imageData: Data) async throws -> String {
         // First, get a presigned URL from our backend
-        let presignedURLResponse = try await networkManager.get<PresignedURLResponse>("/upload/presigned-url")
+        let presignedURLResponse: PresignedURLResponse = try await networkManager.get("/upload/presigned-url")
         
         // Upload the image to S3 using the presigned URL
         guard let url = URL(string: presignedURLResponse.upload_url) else {
