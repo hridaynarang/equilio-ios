@@ -5,7 +5,9 @@ struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
     init(token: String) {
-        _viewModel = StateObject(wrappedValue: HomeViewModel(token: token))
+        _viewModel = StateObject<HomeViewModel>(
+            wrappedValue: HomeViewModel(token: token)
+        )
     }
     
     var body: some View {

@@ -6,7 +6,7 @@ class AuthViewModel: ObservableObject {
     @Published var username = ""
     @Published var email = ""
     @Published var password = ""
-    @Published var isSignup = false
+    @Published var isgup = false
     @Published var isLoading = false
     @Published var errorMessage: String?
     
