@@ -66,7 +66,7 @@ class ManualReceiptEntryViewModel: ObservableObject {
             )
             
             // Submit the receipt
-            let receipt = try await ReceiptService.shared.createReceipt(request: request)
+            _ = try await ReceiptService.shared.createReceipt(request: request)
             
             // Show participant selection
             showingParticipantSelection = true

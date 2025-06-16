@@ -22,12 +22,11 @@ class AddReceiptViewModel: ObservableObject {
     }
     
     func submitReceipt() async {
-        guard let group = selectedGroup else {
+        guard selectedGroup != nil else {
             errorMessage = "Please select a group"
             return
         }
-        
-        guard let amountDouble = Double(amount) else {
+        guard Double(amount) != nil else {
             errorMessage = "Please enter a valid amount"
             return
         }

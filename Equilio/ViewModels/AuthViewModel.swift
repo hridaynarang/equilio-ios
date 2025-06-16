@@ -28,7 +28,7 @@ class AuthViewModel: ObservableObject {
             if isSignup {
                 try await authManager.signup(username: username, email: email, password: password)
             } else {
-                try await authManager.login(email: email, password: password)
+                try await authManager.login(username: email, password: password)
             }
         } catch {
             errorMessage = error.localizedDescription
