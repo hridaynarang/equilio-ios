@@ -7,6 +7,8 @@ class HomeViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var selectedTab = 0
+    @Published var summary: ReceiptSummary?
+    @Published var receipts: [Receipt] = []
     
     private let networkManager = NetworkManager.shared
     
@@ -36,5 +38,18 @@ class HomeViewModel: ObservableObject {
         formatter.numberStyle = .currency
         formatter.currencySymbol = "$"
         return formatter.string(from: NSNumber(value: amount)) ?? "$0.00"
+    }
+    
+    func fetchReceipts() async {
+        isLoading = true
+        errorMessage = nil
+        do {
+            let response: ReceiptResponse = try await networkManager.get("/receipts")
+            self.receipts = response.receipts
+            self.summary = response.summary
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isLoading = false
     }
 } 

@@ -143,9 +143,9 @@ struct ReceiptRow: View {
             }
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(receipt.description)
+                Text(receipt.title)
                     .font(.headline)
-                Text("$\(String(format: "%.2f", receipt.amount))")
+                Text("$\(String(format: "%.2f", receipt.total_amount))")
                     .font(.subheadline)
                     .foregroundColor(.blue)
                 Text(formatDate(receipt.created_at))
