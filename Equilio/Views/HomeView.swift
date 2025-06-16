@@ -5,10 +5,8 @@ struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
     init(token: String) {
-        _viewModel = StateObject<HomeViewModel>(
-            wrappedValue: HomeViewModel(token: token)
-        )
-    }
+         self.viewModel = HomeViewModel(token: token)
+     }
     
     var body: some View {
         NavigationView {
