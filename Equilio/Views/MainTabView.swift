@@ -5,13 +5,13 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView()
+            HomeView(token: AuthManager.shared.token ?? "")
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
                 .tag(0)
             
-            FriendsView()
+            FriendsView(token: AuthManager.shared.token ?? "")
                 .tabItem {
                     Label("Friends", systemImage: "person.3.fill")
                 }
