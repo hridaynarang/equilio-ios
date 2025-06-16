@@ -29,7 +29,7 @@ struct AddReceiptView: View {
                         )
                     }
                     
-                    NavigationLink(destination: ManualReceiptEntryView(viewModel: viewModel)) {
+                    NavigationLink(destination: ManualReceiptEntryView()) {
                         OptionCard(
                             title: "Enter Manually",
                             description: "Type in the receipt details yourself",
